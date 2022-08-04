@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"../models"
-	"github.com/example/simple-REST/pkg/utils"
 	"github.com/gorilla/mux"
+	"github.com/manuonda/go-projects/tree/master/src/go-bookstore/pgk/models"
+	"github.com/manuonda/go-projects/tree/master/src/go-bookstore/pgk/utils"
 )
 
 var NewBook models.Book
@@ -57,5 +57,4 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
-
 }
