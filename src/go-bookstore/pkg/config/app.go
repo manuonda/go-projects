@@ -1,8 +1,7 @@
 package config
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -19,6 +18,6 @@ func Connect() {
 	db = d
 }
 
-func getDb() *gorm.DB {
+func GetDb() *gorm.DB {
 	return db
 }

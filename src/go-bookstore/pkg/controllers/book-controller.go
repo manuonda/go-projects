@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/manuonda/go-projects/src/go-bookstore/pgk/utils"
+	// "github.com/manuonda/go-projects/src/go-bookstore/pgk/utils"
 	"github.com/manuonda/go-projects/src/go-bookstore/pkg/models"
 )
 
@@ -36,13 +36,13 @@ func GetBookId(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateBook(w http.ResponseWriter, r *http.Request) {
-	CreateBook := &models.Book{}
-	utils.ParseBody(r, CreateBook)
-	b := CreateBook.CreateBook()
-	res, _ := json.Marshal(b)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+	// CreateBook := &models.Book{}
+	// utils.ParseBody(r, CreateBook)
+	// b := CreateBook.CreateBook()
+	// res, _ := json.Marshal(b)
+	// w.Header().Set("Content-Type", "application/json")
+	// w.WriteHeader(http.StatusOK)
+	// w.Write(res)
 }
 
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
