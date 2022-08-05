@@ -1,7 +1,7 @@
 package models
 
 import (
-	"../config"
+	"github.com/manuonda/go-projects/src/go-bookstore/pkg/config"
 	"gorm.io/gorm"
 )
 

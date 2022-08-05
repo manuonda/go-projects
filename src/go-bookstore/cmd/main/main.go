@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/manuonda/go-projects/tree/master/src/go-bookstore/pkg/routes"
+	"github.com/manuonda/go-projects/src/go-bookstore/pkg/routes"
 )
 
 func main() {

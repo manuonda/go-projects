@@ -1,4 +1,4 @@
-module github.com/manuonda/go-projects/tree/master/src/go-bookstore
+module github.com/manuonda/go-projects/src/go-bookstore
 
 go 1.18
 
