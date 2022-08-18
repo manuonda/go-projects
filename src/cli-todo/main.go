@@ -23,4 +23,12 @@ func main() {
 		os.Exit(1)
 	}
 
+	switch {
+	case *add:
+		todos.Add("Sample todo")
+	default:
+		fmt.Println(os.Stdout, "invalid command")
+		os.Exit(0)
+	}
+
 }
