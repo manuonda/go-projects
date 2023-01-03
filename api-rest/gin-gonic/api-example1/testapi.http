@@ -1,0 +1,23 @@
+GET http://localhost:8080/books
+
+###
+
+GET http://localhost:8080/books/1
+
+###
+
+POST https://localhost:8080/books
+content-type:  application/json
+{
+   "id": 1,
+	"title": "Title", 
+	"author": "Author 1",
+	"quantity": "5"
+}
+
+###
+PATCH  http://localhost:8080/checkout?id=1
+
+###
+
+PATCH  http://localhost:8080/return?id=1
