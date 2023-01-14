@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-	controller "gin-gonic/gi_yt/controllers"
 	"gin-gonic/gi_yt/database"
+	"gin-gonic/gi_yt/router"
 	service "gin-gonic/gi_yt/services"
 	"log"
 
@@ -16,24 +17,31 @@ import (
 var (
 	server *gin.Engine
 	us     service.UserService
-	uc     controller.UserControllerMysql
 	ctx    context.Context
 	err    error
+	DB     *sql.DB
 )
 
 func init() {
-	fmt.Println("Connect to Database")
-	database.Connect()
 
 	//us = &service.UserServiceMysqlImpl{database: db}
 	//uc = controller.UserControllerMysql(us)
 
 	fmt.Println("db connected")
+	fmt.Println("--- db init -----")
+	fmt.Println(" salida db: ", DB)
 }
 
 func main() {
+	fmt.Println("Connect to Database")
+	DB, err := database.Connect()
+	if err != nil {
+		fmt.Print("falta error connection")
+	}
+	fmt.Println("-----------------")
+	fmt.Println("--- main onta DB", DB)
 	var server = gin.Default()
 	basepath := server.Group("/v1")
-	uc.RegisterUserRoutesMysql(basepath)
-	log.Fatal(server.Run(":9090"))
+	router.NewRouter(basepath, DB)
+	log.Fatal(server.Run(":9091"))
 }

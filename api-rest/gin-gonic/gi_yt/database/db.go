@@ -11,7 +11,7 @@ import (
 
 var DB *sql.DB
 
-func Connect() {
+func Connect() (*sql.DB, error) {
 
 	dbError := godotenv.Load()
 
@@ -34,8 +34,9 @@ func Connect() {
 		fmt.Println("Fatal error : ", err.Error())
 	}
 
-	fmt.Printf("connection success")
+	fmt.Printf("connection success", DB)
 
-	defer DB.Close()
+	return DB, err
+	//defer DB.Close()
 
 }

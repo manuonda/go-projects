@@ -1,22 +1,37 @@
 package service
 
 import (
-	"database/sql"
 	"fmt"
 	"gin-gonic/gi_yt/models"
+	"gin-gonic/gi_yt/repository"
 )
 
-type UserServiceMysqlImpl struct {
-	database *sql.DB
+type IUserService interface {
+	Save(user *models.User) (*models.User, error)
+	FindAll() ([]*models.User, error)
 }
 
-func NewUserServiceMysqlImpl(db *sql.DB) *UserServiceMysqlImpl {
-	return &UserServiceMysqlImpl{
-		database: db,
+type userService struct {
+	UserRepo repository.IUserRepository
+}
+
+func NewUserService(userRepo repository.IUserRepository) IUserService {
+	return &userService{UserRepo: userRepo}
+}
+
+// FindAll implements IUserService
+func (*userService) FindAll() ([]*models.User, error) {
+	panic("unimplemented")
+}
+
+// Save implements IUserService
+func (us *userService) Save(user *models.User) (*models.User, error) {
+	//panic("unimplemented")
+	fmt.Println("Save User service implement {}", user)
+	user, err := us.UserRepo.Save(user)
+	if err != nil {
+		fmt.Print("Error Save ")
 	}
-}
-
-func (u *UserServiceMysqlImpl) CreateUser(user *models.User) string {
-	fmt.Println("user parameter impl ", user)
-	return user.Name
+	fmt.Println("Saved user in capa service implement ", user)
+	return user, nil
 }
