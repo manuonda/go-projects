@@ -21,8 +21,26 @@ func NewUserRepository(db *sql.DB) IUserRepository {
 }
 
 // FindAll implements IUserRepository
-func (*UserRepository) FindAll() ([]*models.User, error) {
-	panic("unimplemented")
+func (ur *UserRepository) FindAll() ([]*models.User, error) {
+	fmt.Print("Find All repository")
+	rows, err := ur.DB.Query("select * from ")
+	if err != nil {
+		fmt.Println("Error Query Select")
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var user models.User
+	var users *[]models.User
+
+	for rows.Next() {
+		err := rows.Scan(&user.Id, &user.Name, &user.Age)
+		if err != nil {
+			fmt.Println("Error scan variables")
+		}
+		append(*users, *user)
+	}
 }
 
 // Save implements IUserRepository
