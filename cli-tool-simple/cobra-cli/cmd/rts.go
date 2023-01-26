@@ -24,13 +24,8 @@ import (
 // rtsCmd represents the rts command
 var rtsCmd = &cobra.Command{
 	Use:   "rts",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Crea archivo de routes",
+	Long:  `Crea archivo de routes`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("rts called")
 	},
