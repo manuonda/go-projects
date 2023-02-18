@@ -4,10 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"os"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/manuonda/go-projects/tutorials/configuration-app/configuration"
 )
+
+/*
 
 func CreateConnection(ctx context.Context) *sql.DB {
 
@@ -50,4 +52,27 @@ func CreateConnection(ctx context.Context) *sql.DB {
 		panic(err)
 	}
 	return db
+}
+*/
+
+func CreateConnection(ctx context.Context, config *configuration.Configuration) *sql.DB {
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
+		config.DB.User,
+		config.DB.Password,
+		config.DB.Host,
+		config.DB.Port,
+		config.DB.Name)
+	fmt.Println(connectionString)
+
+	db, err := sql.Open("mysql", connectionString)
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.PingContext(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return db
+
 }

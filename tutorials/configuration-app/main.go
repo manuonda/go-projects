@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/joho/godotenv"
+	"github.com/manuonda/go-projects/tutorials/configuration-app/configuration"
 	"github.com/manuonda/go-projects/tutorials/configuration-app/database"
 )
 
@@ -15,13 +15,19 @@ func main() {
 
 	ctx := context.Background()
 
-	err = godotenv.Load(".env")
+	// err = godotenv.Load(".env")
 
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	config, err := configuration.Load("config.yml")
 	if err != nil {
 		panic(err)
 	}
+
 	//create connection
-	db := database.CreateConnection(ctx)
+	db := database.CreateConnection(ctx, config)
 	defer db.Close()
 
 	// test query
