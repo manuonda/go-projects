@@ -4,15 +4,15 @@ import "encoding/json"
 
 var persons string = `
 [
-  {Name: "Jhon", Age: 20},
-  {Name: "Jane", Age: 21}
+  {"Name": "Jhon", "Age": 20},
+  {"Name": "Jane", "Age": 21}
 ]
 `
 
 var employees string = `
 [
-	{Name: "Jhon", Position : "Manager"},
-	{Name: "Jane", Position : "Developer"}
+	{"Name": "Jhon", "Position" : "Manager"},
+	{"Name": "Jane", "Position" : "Developer"}
 ]
 `
 

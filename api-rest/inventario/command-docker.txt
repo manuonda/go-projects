@@ -6,3 +6,6 @@ docker stop mariadb-jammy
 docker exect -it mariadb-jammy -u root -p 
 
 docker inspect (information docker ip)
+
+
+problem --security-opt seccomp=unconfined

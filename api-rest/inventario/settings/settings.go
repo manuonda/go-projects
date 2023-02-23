@@ -1,7 +1,16 @@
 package settings
 
-import "gopkg.in/yaml.v2"
+import (
+	_ "embed"
 
+	"gopkg.in/yaml.v3"
+)
+
+//go =>  embed me permite cargar el
+//file en la anotacion cargar el archivo
+//settings.yaml
+
+//go:embed settings.yaml
 var settingsFile []byte
 
 type DatabaseConfig struct {
