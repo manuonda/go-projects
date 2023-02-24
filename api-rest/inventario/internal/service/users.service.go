@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/manuonda/go-projects/inventario/encryption"
 	"github.com/manuonda/go-projects/inventario/internal/models"
 )
 
@@ -17,18 +18,34 @@ func (s *service) RegisterUser(ctx context.Context, email, name, password string
 	if u != nil {
 		return ErrUserAlreadyExists
 	}
-	//TODO: hasspassword
-	return s.repo.SaveUser(ctx, email, name, password)
+	bb, err := encryption.Encrypt([]byte(password))
+	if err != nil {
+		return err
+	}
+	pass := encryption.ToBase64(bb)
+	return s.repo.SaveUser(ctx, email, name, pass)
 }
 
 func (s *service) LoginUser(ctx context.Context, email, password string) (*models.User, error) {
-	u, err := s.repo.GetUserEmail(ctx, email)
+	u, err := s.repo.GetUserByEmail(ctx, email)
 	if err != nil {
 		return nil, err
 	}
 
 	//TODO: decrypt password
-	if u.Password != password {
+	bb, err := encryption.FromBase64(u.Password)
+
+	if err != nil {
+		return nil, err
+	}
+
+	decryptedPassword, err := encryption.Decrypt(bb)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if string(decryptedPassword) != password {
 		return nil, ErrInvalidCredentials
 	}
 
