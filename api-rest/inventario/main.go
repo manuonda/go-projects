@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 
-	"github.com/jmoiron/sqlx"
 	"github.com/manuonda/go-projects/inventario/database"
 	"github.com/manuonda/go-projects/inventario/internal/repository"
 	"github.com/manuonda/go-projects/inventario/internal/service"
@@ -22,8 +21,8 @@ func main() {
 			service.New,
 		),
 		fx.Invoke(
-			func(db *sqlx.DB) {
-				_, err := db.Query("SELECT * FROM USERS")
+			func(ctx context.Context, service service.Service) {
+				err := service.RegisterUser(ctx, "manuonda@gmail.com", "manuonda", "12345678")
 				if err != nil {
 					panic(err)
 				}
