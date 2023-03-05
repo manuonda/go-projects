@@ -14,6 +14,7 @@ type Repository interface {
 
 	SaveUserRole(ctx context.Context, userId, roleId int64) error
 	RemoveUserRole(ctx context.Context, userId, roleId int64) error
+	GetUserRolesByUserId(ctx context.Context, userId int64) ([]entity.UserRole, error)
 }
 
 type repo struct {
