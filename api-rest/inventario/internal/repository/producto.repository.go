@@ -19,7 +19,7 @@ const (
 )
 
 func (r *repo) SaveProduct(ctx context.Context, name, description string, price float32, createdBy int64) error {
-	return nil
+	_
 }
 
 func (r *repo) GetProducts(ctx context.Context) ([]entitys.Producto, error) {
