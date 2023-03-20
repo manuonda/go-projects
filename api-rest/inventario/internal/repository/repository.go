@@ -19,7 +19,7 @@ type Repository interface {
 
 	SaveProduct(ctx context.Context, name, description string, price float32, createdBy int64) error
 	GetProducts(ctx context.Context) ([]entitys.Producto, error)
-	GetProduct(ctx context.Context, ID int64) (entitys.Producto, error)
+	GetProduct(ctx context.Context, ID int64) (*entitys.Producto, error)
 }
 
 type repo struct {
