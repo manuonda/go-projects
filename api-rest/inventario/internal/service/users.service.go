@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/manuonda/go-projects/inventario/encryption"
 	"github.com/manuonda/go-projects/inventario/internal/models"
@@ -15,7 +16,9 @@ var (
 
 func (s *service) RegisterUser(ctx context.Context, email, name, password string) error {
 	u, _ := s.repo.GetUserByEmail(ctx, email)
+	fmt.Println("user found :", u)
 	if u != nil {
+		fmt.Println("user exists")
 		return ErrUserAlreadyExists
 	}
 	bb, err := encryption.Encrypt([]byte(password))

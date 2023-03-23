@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/manuonda/go-projects/inventario/internal/entitys"
 )
@@ -18,7 +19,7 @@ const (
 	  email, 
 	  name,
 	  password 
-	  from users
+	  from USERS
 	  where email = ?
 	`
 )
@@ -29,10 +30,14 @@ func (r *repo) SaveUser(ctx context.Context, email, name, password string) error
 }
 func (r *repo) GetUserByEmail(ctx context.Context, email string) (*entitys.User, error) {
 	u := entitys.User{}
+	fmt.Println("email found", email)
 
 	err := r.db.GetContext(ctx, &u, qryGetUserByEmail, email)
+	fmt.Println("error found getcontext : ", err)
 	if err != nil {
+
 		return nil, err
 	}
+	fmt.Println("user found repositorio : ", u)
 	return &u, nil
 }
