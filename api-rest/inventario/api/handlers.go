@@ -1,10 +1,12 @@
 package api
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/manuonda/go-projects/inventario/api/dtos"
+	"github.com/manuonda/go-projects/inventario/encryption"
 	"github.com/manuonda/go-projects/inventario/internal/service"
 )
 
@@ -36,4 +38,35 @@ func (a *API) RegisterUser(c echo.Context) error {
 
 	}
 	return c.JSON(http.StatusCreated, nil)
+}
+
+func (api *API) LonginUser(c echo.Context) error {
+	ctx := c.Request().Context()
+	params := dtos.LoginUser{}
+
+	err := c.Bind(&params)
+	if err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusBadRequest, responseMessage{Message: "Invalid Request"})
+	}
+
+	err = api.dataValidator.Struct(params)
+	if err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusBadRequest, responseMessage{Message: err.Error()})
+	}
+
+	u, err := api.serv.LoginUser(ctx, params.Email, params.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, responseMessage{Message: "Internal server error"})
+	}
+
+	token, err := encryption.SignedLoginToken(u)
+	if err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusInternalServerError, responseMessage{Message: "Internal server error"})
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{"success": token})
+
 }
