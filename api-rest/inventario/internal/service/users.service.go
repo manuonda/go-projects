@@ -35,6 +35,8 @@ func (s *service) LoginUser(ctx context.Context, email, password string) (*model
 		return nil, err
 	}
 
+	fmt.Println("Service encontrado1 : ", u.ID)
+
 	//TODO: decrypt password
 	bb, err := encryption.FromBase64(u.Password)
 
@@ -42,15 +44,23 @@ func (s *service) LoginUser(ctx context.Context, email, password string) (*model
 		return nil, err
 	}
 
+	fmt.Println("Service encontrado2 : ", u.ID)
+
 	decryptedPassword, err := encryption.Decrypt(bb)
+
+	fmt.Println("Service encontrado3 : ", u.ID)
 
 	if err != nil {
 		return nil, err
 	}
 
+	fmt.Println("Service encontrado4 : ", u.ID)
+
 	if string(decryptedPassword) != password {
+		fmt.Println("aqui ingreso no es el mismo password")
 		return nil, ErrInvalidCredentials
 	}
+	fmt.Println("Service encontrado3 : ", u.ID)
 
 	return &models.User{
 		ID:    u.ID,

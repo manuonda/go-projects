@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -43,7 +44,7 @@ func (a *API) RegisterUser(c echo.Context) error {
 func (api *API) LonginUser(c echo.Context) error {
 	ctx := c.Request().Context()
 	params := dtos.LoginUser{}
-
+	fmt.Println("params : ", params.Email)
 	err := c.Bind(&params)
 	if err != nil {
 		log.Println(err)
@@ -57,15 +58,27 @@ func (api *API) LonginUser(c echo.Context) error {
 	}
 
 	u, err := api.serv.LoginUser(ctx, params.Email, params.Password)
+
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, responseMessage{Message: "Internal server error"})
+		if err == service.ErrInvalidCredentials {
+			return c.JSON(http.StatusBadRequest, responseMessage{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, responseMessage{Message: "Internal server error"})
 	}
 
 	token, err := encryption.SignedLoginToken(u)
 	if err != nil {
-		log.Println(err)
+		log.Println("existe error que onda : ", err)
 		return c.JSON(http.StatusInternalServerError, responseMessage{Message: "Internal server error"})
 	}
+
+	cookie := &http.Cookie{
+		Name:     "Authorization",
+		Value:    token,
+		Secure:   true,
+		SameSite: http.SameSiteNoneMode,
+	}
+	c.SetCookie(cookie)
 
 	return c.JSON(http.StatusOK, map[string]string{"success": token})
 
