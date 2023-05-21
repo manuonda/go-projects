@@ -1,17 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
 
-	Imprimir()
-	//Imprimir()
-	// bookworms, err := LoadBookworms("testdata/bookworm.json")
-	// if err != nil {
-	// 	_, _ = fmt.Fprint(os.Stderr, "failed to load boolworms : %s", err)
-	// 	os.Exit(1)
-	// }
-	// fmt.Println(bookworms)
+	bookworms, err := LoadBookworms("testdata/bookworm.json")
+	if err != nil {
+		_, _ = fmt.Fprint(os.Stderr, "failed to load boolworms : %s", err)
+		os.Exit(1)
+	}
+
+	commonBooks := findCommonBooks(bookworms)
+	fmt.Println("Here are the books in common : ")
+	displayBooks(commonBooks)
+
+	//sortBooks : = sortsortBooks()
 
 }
 
