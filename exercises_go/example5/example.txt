@@ -1,0 +1,6 @@
+title: Workshop Title
+instructors:
+- name: Instructor 1
+  email: instructor1@example.com
+- name: Instructor 2
+  email: instructor2@example.com
