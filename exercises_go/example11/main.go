@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/spf13/cobra/cobra/cmd"
+import "github.com/manuonda/go-projects/exercises_go/example11/cmd"
 
 func main() {
 	cmd.Execute()
