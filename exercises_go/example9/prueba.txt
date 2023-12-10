@@ -1,1 +1,0 @@
-{Building Modern CLI Applications with Go [{Marian Montagnino mmontagnino@netflix.com} {Romeric Philogene rphiologene@qovery.com}]}

@@ -1,4 +1,0 @@
-cobra add mk
-cobra add -p mk rts  // add to package mk
-
-cobra add mdl -p mkCmd
