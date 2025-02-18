@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"sync"
+	"time"
+)
 
 type Address struct {
 	City, State string
@@ -71,6 +76,43 @@ func doSomething(i interface{}) {
 
 }
 
+func sayHello() {
+	fmt.Println("Hello")
+}
+
+func counter() func() int {
+	count := 0
+	return func() int {
+		count++
+		return count
+	}
+}
+
+func cambiarValor(p *int) {
+	*p = 42
+}
+
+func printMessage(wg *sync.WaitGroup, message string) {
+	defer wg.Done() // Indica que la goroutine ha terminado
+	fmt.Println(message)
+}
+
+/*
+*
+
+	channels
+	 <- chan int: solo de se puede leer en el canal
+	 chan <- int: solo se puede escribir en el canal
+*/
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Printf("Trabajador %d procesando trabajo %d\n", id, j)
+		time.Sleep(time.Second)
+		fmt.Printf("Trabajador %d finalizo trabajo %d\n", id, j)
+		results <- j * 2
+	}
+}
+
 func main() {
 	fmt.Println("Hell world")
 	var float32 float32 = 3.14
@@ -120,20 +162,101 @@ func main() {
 		},
 	}
 	car.Start()
-}
 
-func sayHello() {
-	fmt.Println("Hello")
-}
+	var wg sync.WaitGroup
+	wg.Add(1) // Agrega una goroutine al grupo
+	go printMessage(&wg, "Hola desde una goroutine!")
+	wg.Wait() // Espera a que todas las goroutines terminen
+	fmt.Println("Hola desde la funcion prinicipal!")
 
-func counter() func() int {
-	count := 0
-	return func() int {
-		count++
-		return count
+	print("== Channels ===")
+	messages := make(chan string)
+	go func() {
+		messages <- "Hola desde el canal"
+	}()
+	msg := <-messages
+	fmt.Println("\n", msg)
+
+	jobs := make(chan int, 100)
+	results := make(chan int, 100)
+	for w := 1; w <= 3; w++ {
+		go worker(w, jobs, results)
+	}
+
+	for j := 1; j <= 5; j++ {
+		jobs <- j
+	}
+	close(jobs)
+	for a := 1; a <= 5; a++ {
+		fmt.Println("Resultado : ", <-results)
+	}
+
+	ch1 := make(chan string)
+	ch2 := make(chan string)
+
+	go func() {
+		time.Sleep(1 * time.Second)
+		ch1 <- "Hola"
+	}()
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		ch2 <- "Mundo"
+	}()
+
+	for i := 0; i < 2; i++ {
+		select {
+		case msg1 := <-ch1:
+			fmt.Println("Recibido ", msg1)
+		case msg2 := <-ch2:
+			fmt.Println("Recibido ", msg2)
+		}
+	}
+
+	fmt.Print("=== Testing ===")
+	result, err := divide(4, 0)
+	if err != nil {
+		fmt.Println("Error : ", err)
+		//return
+	}
+	fmt.Println("Resultado : ", result)
+
+	_, err = sqrt(-4)
+	if err != nil {
+		fmt.Print("Error : ", err)
 	}
 }
 
-func cambiarValor(p *int) {
-	*p = 42
+type ErrorDetail struct {
+	Arg  float64
+	Prob string
+}
+
+/**
+* Implementa la interfaz error
+ */
+func (e *ErrorDetail) Error() string {
+	return fmt.Sprintf("%f - %s", e.Arg, e.Prob)
+}
+
+/**
+* Funcion que retorna la raiz cuadrada de un numero
+* tiene dos valores de retorno
+* float64: resultado
+* error: error es una interfaz
+ */
+
+func sqrt(x float64) (float64, error) {
+
+	if x < 0 {
+		return 0, &ErrorDetail{x, "No puede ser numero negativo"}
+	}
+	return x * x, nil
+}
+
+func divide(a, b float64) (float64, error) {
+	if b == 0 {
+		return 0, errors.New("no se puede dividir por cero")
+	}
+	return a / b, nil
 }
