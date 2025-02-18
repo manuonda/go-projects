@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sync"
 	"time"
+	"tutorial/hello/mathutils"
 )
 
 type Address struct {
@@ -225,6 +226,9 @@ func main() {
 	if err != nil {
 		fmt.Print("Error : ", err)
 	}
+
+	var resultTwo = mathutils.Add(1, 2)
+	fmt.Printf("\n1 + 2  = %d\n", resultTwo)
 }
 
 type ErrorDetail struct {
