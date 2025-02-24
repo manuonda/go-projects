@@ -1,11 +1,11 @@
 package port
 
-// Los puertos definen mediante interfaces los métodos que
-// debe contener una estructura para ser un
-// Servicio o Repositorio.
+// Los puertos definen mediante interfaces los
+// métodos que debe contener una estructura
+// para ser un Servicio o Repositorio.
 
 import (
-	"arquitectura-hexagonal/internal/domain"
+	"arquitectura-hexagonal/internal/core/domain"
 
 	"github.com/gofiber/fiber/v2"
 )
