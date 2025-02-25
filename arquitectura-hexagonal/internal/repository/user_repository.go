@@ -33,7 +33,7 @@ func (r *UserRepository) GetUserByEmail(email string) (*domain.User, error) {
 
 }
 
-func (r *UserRepository) CreateUser(user domain.User) error {
+func (r *UserRepository) CreateUser(user *domain.User) error {
 	query := "INSERT INTO users(email, name) values (?,?)"
 	_, err := r.db.Exec(query, user.Email, user.Name)
 	if err != nil {

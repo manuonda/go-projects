@@ -4,6 +4,7 @@ import (
 	"arquitectura-hexagonal/internal/core/domain"
 	port "arquitectura-hexagonal/internal/core/ports"
 	"errors"
+	"fmt"
 )
 
 // Los servicios son la implementacion
@@ -18,6 +19,7 @@ func NewUserService(repository port.UserRepository) *UserService {
 }
 
 func (s *UserService) CreateUser(user *domain.User) error {
+	fmt.Println("\n Ingresando a create user")
 	if user.Email == "" {
 		return errors.New("el email no puede estar vacio")
 	}

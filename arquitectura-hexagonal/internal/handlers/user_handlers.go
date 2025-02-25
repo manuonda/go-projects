@@ -3,6 +3,7 @@ package handlers
 import (
 	"arquitectura-hexagonal/internal/core/domain"
 	port "arquitectura-hexagonal/internal/core/ports"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -38,9 +39,10 @@ func (h *UserHandlers) GetUserByEmail(c *fiber.Ctx) error {
 }
 
 func (h *UserHandlers) CreateUser(c *fiber.Ctx) error {
+	fmt.Println("ingresando create user handler")
 	user := &domain.User{}
 	if err := c.BodyParser(&user); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(nil)
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 	err := h.userService.CreateUser(user)
 	if err != nil {
