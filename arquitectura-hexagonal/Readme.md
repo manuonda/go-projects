@@ -31,5 +31,13 @@ Este proyecto sigue la arquitectura hexagonal. A continuación se muestra la est
 - **go.mod**: Archivo de configuración de módulos de Go.
 ```
 
+```sql
+CREATE TABLE users (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL
+);
+```
 
 //https://carlos.lat/blog/hexagonal-architecture-using-go-fiber/

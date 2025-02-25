@@ -23,6 +23,7 @@ func (r *UserRepository) GetUserByEmail(email string) (*domain.User, error) {
 	var user domain.User
 
 	err := row.Scan(&user.Email, &user.Name)
+	fmt.Printf("Error repository getUserByEmail : ", err)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, errors.New("Error finding by email")

@@ -19,13 +19,16 @@ func NewUserService(repository port.UserRepository) *UserService {
 }
 
 func (s *UserService) CreateUser(user *domain.User) error {
-	fmt.Println("\n Ingresando a create user")
+	fmt.Println("\n Ingresando a create user service")
+	fmt.Printf("email : %v , %v", user.Email, user.Name)
 	if user.Email == "" {
 		return errors.New("el email no puede estar vacio")
 	}
 
+	fmt.Println("paso por aca")
 	//Validar que el email no exista ya en el repositorio
 	existingUserEmail, err := s.userRepository.GetUserByEmail(user.Email)
+	fmt.Printf("Error  : %v", err)
 	if err != nil {
 		return err
 	}
