@@ -32,9 +32,12 @@ func (s *UserService) CreateUser(user *domain.User) error {
 	if err != nil {
 		return err
 	}
+	fmt.Print("aqui paso 22")
+	fmt.Printf("existingUserEmail: %v ", existingUserEmail)
 	if existingUserEmail != nil {
 		return errors.New("el email ya se encuentra registrado")
 	}
+	fmt.Println("create user")
 	return s.userRepository.CreateUser(user)
 }
 

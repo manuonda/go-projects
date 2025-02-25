@@ -25,10 +25,12 @@ func (r *UserRepository) GetUserByEmail(email string) (*domain.User, error) {
 	err := row.Scan(&user.Email, &user.Name)
 	fmt.Printf("Error repository getUserByEmail : ", err)
 	if err != nil {
+		fmt.Print("Aqui ingreso uno 1")
 		if err == sql.ErrNoRows {
-			return nil, errors.New("Error finding by email")
+			fmt.Println("Aqui ingreso dos")
+			return nil, nil
 		}
-		return nil, errors.New("Error getting user by email ")
+		return nil, errors.New("error getting user by email")
 	}
 	return &user, nil
 
@@ -38,6 +40,7 @@ func (r *UserRepository) CreateUser(user *domain.User) error {
 	query := "INSERT INTO users(email, name) values (?,?)"
 	_, err := r.db.Exec(query, user.Email, user.Name)
 	if err != nil {
+		fmt.Printf("Erro create user : %v", err)
 		return fmt.Errorf("error creating user : %v", err)
 	}
 	return nil
