@@ -6,13 +6,14 @@ This project is a simple CLI application for managing a todo list. It allows you
 
 1. Clone the repository:
 	```sh
-	git clone https://github.com/yourusername/go-todo-list.git
+	git clone https://github.com/manuonda/go-todo-list.git
 	cd go-todo-list
 	```
 
 2. Build the application:
+
 	```sh
-	go build -o todo
+	   go build -o todo
 	```
 
 ## Usage
