@@ -23,6 +23,6 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(listCmd)
-	//rootCmd.AddCommand(deleteCmd)
-	//rootCmd.AddCommand(doneCmd)
+	rootCmd.AddCommand(deleteCmd)
+	rootCmd.AddCommand(completedCmd)
 }

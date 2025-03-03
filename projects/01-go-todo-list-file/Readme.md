@@ -1,145 +1,92 @@
-# Todo App
+# Go Todo List CLI
 
-## Goal
+This project is a simple CLI application for managing a todo list. It allows you to add, delete, list, and mark tasks as completed. The tasks are stored in a JSON file.
 
-Create an cli application for managing tasks in the terminal.
+## Installation
 
-```
-$ tasks
-```
+1. Clone the repository:
+	```sh
+	git clone https://github.com/yourusername/go-todo-list.git
+	cd go-todo-list
+	```
 
-## Requirements
+2. Build the application:
+	```sh
+	go build -o todo
+	```
 
-Should be able to perform crud operations via a cli on a data file of tasks. The operations should be as follows:
+## Usage
 
-```
-$ tasks add "My new task"
-$ tasks list
-$ tasks complete 
-```
+### Add a new task
 
-### Add
-
-The add method should be used to create new tasks in the underlying data store. It should take a positional argument with the task description
-
-```
-$ tasks add <description>
+To add a new task, use the `add` command followed by the task description:
+```sh
+./todo add "Buy groceries"
 ```
 
-for example:
+### List all tasks
 
-```
-$ tasks add "Tidy my desk"
-```
 
-should add a new task with the description of "Tidy my desk"
-
-### List
-
-This method should return a list of all of the **uncompleted** tasks, with the option to return all tasks regardless of whether or not they are completed.
-
-for example:
-
-```
-$ tasks list
-ID    Task                                                Created
-1     Tidy up my desk                                     a minute ago
-3     Change my keyboard mapping to use escape/control    a few seconds ago
+To list all tasks, use the `list` command:
+```sh
+./todo list
 ```
 
-or for showing all tasks, using a flag (such as -a or --all)
-
-```
-$ tasks list -a
-ID    Task                                                Created          Done
-1     Tidy up my desk                                     2 minutes ago    false
-2     Write up documentation for new project feature      a minute ago     true
-3     Change my keyboard mapping to use escape/control    a minute ago     false
+```sh
+Title             Completed   CreatedAt                  CompletedAt
+Buy groceries     No          2023-10-01T12:00:00Z       
+Finish the report No          2023-10-01T13:00:00Z       
 ```
 
+### Delete a task
 
-### Complete
-
-To mark a task as done, add in the following method
-
-```
-$ tasks complete <taskid>
+To delete a task, use the `delete` command followed by the task index:
+```sh
+./todo delete 0
 ```
 
-### Delete
+### Mark a task as completed
 
-The following method should be implemented to delete a task from the data store
-
-```
-$ tasks delete <taskid>
-```
-
-## Notable Packages Used
-
-- `encoding/csv` for writing out as a csv file
-- `strconv` for turning types into strings and visa versa
-- `text/tabwriter` for writing out tab aligned output
-- `os` for opening and reading files
-- `github.com/spf13/cobra` for the command line interface
-- `github.com/mergestat/timediff` for displaying relative friendly time differences (1 hour ago, 10 minutes ago, etc)
- 
-## Custom Resources
-
-### Example Application
-
-You can find an [example version](https://github.com/dreamsofcode-io/goprojects/releases/tag/0.1.0) of this todo list on the releases tab of this repo.
-
-### Example Data File
-
-Additionally, an example CSV looks like as follows:
-
-```
-ID,Description,CreatedAt,IsComplete
-1,My new task,2024-07-27T16:45:19-05:00,true
-2,Finish this video,2024-07-27T16:45:26-05:00,true
-3,Find a video editor,2024-07-27T16:45:31-05:00,false
+To mark a task as completed, use the `completed` command followed by the task index:
+```sh
+./todo completed 0
 ```
 
-## Technical Considerations
+## Example
 
-### Stderr vs Stdout
+Here is an example of how to use the CLI:
 
-Make sure to write any diagnostics or errors to stderr stream and write output to stdout.
+1. Add a new task:
+	```sh
+	./todo add "Finish the report"
+	```
 
-### File Locking
-One major consideration is that the underlying data file should be locked by the process to prevent concurrent read/writes. This can
-be achieved using the flock system call in unix like systems to obtain an exclusive lock on the file.
+2. List all tasks:
+	```sh
+	./todo list
+	
+	 -----------------------------------------------------------------------------
+	│  Title  │ Completed │         CreatedAt         │        CompletedAt        │
+	├─────────┼───────────┼───────────────────────────┼───────────────────────────┤
+	│ tarea 1 │ Si        │ 2025-03-03T15:24:46-03:00 │ 2025-03-03T15:24:57-03:00 │
+	├─────────┼───────────┼───────────────────────────┼───────────────────────────┤
+	│ Tarea 2 │ No        │ 2025-03-03T15:25:08-03:00 │                           │
+	├─────────┼───────────┼───────────────────────────┼───────────────────────────┤
+	│ Tarea 3 │ No        │ 2025-03-03T15:25:14-03:00 │                           │
+	├─────────┼───────────┼───────────────────────────┼───────────────────────────┤
+	│ Tarea 3 │ No        │ 2025-03-03T18:49:22-03:00 │                           │
+	```
 
-You can achieve this in go using the following code:
+3. Mark the first task as completed:
+	```sh
+	./todo completed 0
+	```
 
-```go
-func loadFile(filepath string) (*os.File, error) {
-	f, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, os.ModePerm)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open file for reading")
-	}
+4. Delete the first task:
+	```sh
+	./todo delete 0
+	```
 
-    // Exclusive lock obtained on the file descriptor
-	if err := syscall.Flock(int(f.Fd()), syscall.LOCK_EX); err != nil {
-		_ = f.Close()
-		return nil, err
-	}
+## License
 
-	return f, nil
-}
-```
-
-Then to unlock the file, use the following:
-
-```go
-func closeFile(f *os.File) error {
-	syscall.Flock(int(f.Fd()), syscall.LOCK_UN)
-	return f.Close()
-}
-```
-
-## Extra Features
-
-- Change the IsComplete property of the Task data model to use a timestamp instead, which gives further information.
-- Change from CSV to JSON, JSONL or SQLite
-- Add in an optional due date to the tasks
+This project is licensed under the MIT License.
