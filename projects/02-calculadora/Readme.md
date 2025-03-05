@@ -9,41 +9,49 @@ To install the calculator, you need to have Go installed on your machine. You ca
 Clone the repository:
 
 ```sh
-git clone https://github.com/yourusername/calculator-go.git
-cd calculator-go
+git clone https://github.com/manuonda/go-projects.git 
+cd tutorials/calculator-go
 ```
 
 ## Usage
+To use the calculator, you can follow these steps:
 
-To use the calculator, run the following command:
+1. Build the project:
 
-```sh
-go run main.go
-```
+    ```sh
+    go build -o calc
+    ```
 
-You can then enter your arithmetic expressions, and the calculator will evaluate them.
+2. Run the calculator with an expression:
 
-## Features
+    ```sh
+    ./calc "3 + 4"
+    ```
 
-- Addition
-- Subtraction
-- Multiplication
-- Division
+    This will output:
 
-## Example
+    ```
+    Resultado: 7
+    ```
 
-```sh
-Enter expression: 5 + 3
-Result: 8
+3. If you run the calculator without any arguments, it will start in REPL mode:
 
-Enter expression: 10 / 2
-Result: 5
-```
+    ```sh
+    ./calc
+    ```
 
-## Contributing
+    In REPL mode, you can enter expressions interactively:
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+    ```
+    > 5 * 6
+    Resultado: 30
+    > 8 / 2
+    Resultado: 4
+    ```
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+The calculator supports the following operations:
+- Addition (`+`)
+- Subtraction (`-`)
+- Multiplication (`*`)
+- Division (`/`)
+- And others

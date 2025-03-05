@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
 	Use:   "calc [expresion]",
 	Short: "Calculator operations",
 	Long:  "Operations calculator add(+), difference(-), divide(/) and others",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if len(args) == 1 {
