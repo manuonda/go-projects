@@ -1,5 +1,11 @@
 package main
 
+/**
+Lo interesante en Go es que no necesitas declarar explícitamente que una estructura implementa una interfaz. Si una estructura tiene todos los métodos requeridos por una interfaz (como Dog tiene el método Speak() requerido por la interfaz Speaker), entonces automáticamente implementa esa interfaz.
+
+Esta es una característica de diseño que hace que Go sea muy flexible y promueve un acoplamiento débil entre componentes.
+**/
+
 import "fmt"
 
 type Speaker interface {
