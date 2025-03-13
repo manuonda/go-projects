@@ -1,15 +1,23 @@
 package main
 
 /**
-Lo interesante en Go es que no necesitas declarar explícitamente que una estructura implementa una interfaz. Si una estructura tiene todos los métodos requeridos por una interfaz (como Dog tiene el método Speak() requerido por la interfaz Speaker), entonces automáticamente implementa esa interfaz.
+Lo interesante en Go es que no necesitas declarar
+explícitamente que una estructura implementa una interfaz.
+Si una estructura tiene todos los métodos requeridos
+por una interfaz (como Dog tiene el método Speak()
+requerido por la interfaz Speaker), entonces automáticamente
+implementa esa interfaz.
 
-Esta es una característica de diseño que hace que Go sea muy flexible y promueve un acoplamiento débil entre componentes.
+Esta es una característica de diseño que hace que Go sea muy flexible y
+promueve un acoplamiento débil entre componentes.
+
 **/
 
 import "fmt"
 
 type Speaker interface {
 	Speak() string
+	Read() string
 }
 
 type Dog struct {
@@ -18,6 +26,10 @@ type Dog struct {
 
 func (d Dog) Speak() string {
 	return d.Name + "say Woof!"
+}
+
+func (d Dog) Read() string{
+
 }
 
 // 2. Embbeding Interfaces
@@ -75,7 +87,9 @@ func main() {
 	bird := Bird{Name: "Tweety"}
 	car := Car{Model: "Tesla"}
 
+	fmt.Println("Animal Dog --")
 	fmt.Println(dog.Speak())
+	fmt.Println(dog.)
 	fmt.Println(bird.Speak())
 	fmt.Println(bird.Move())
 
