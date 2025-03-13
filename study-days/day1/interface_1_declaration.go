@@ -28,8 +28,8 @@ func (d Dog) Speak() string {
 	return d.Name + "say Woof!"
 }
 
-func (d Dog) Read() string{
-
+func (d Dog) Read() string {
+	return d.Speak() + " speak Dog!"
 }
 
 // 2. Embbeding Interfaces
@@ -44,6 +44,10 @@ type Bird struct {
 
 func (b Bird) Speak() string {
 	return b.Name + "says Tweet"
+}
+
+func (b Bird) Read() string {
+	return b.Name + " bird Speak"
 }
 
 func (b Bird) Move() string {
@@ -89,7 +93,7 @@ func main() {
 
 	fmt.Println("Animal Dog --")
 	fmt.Println(dog.Speak())
-	fmt.Println(dog.)
+	fmt.Println(dog.Read())
 	fmt.Println(bird.Speak())
 	fmt.Println(bird.Move())
 
